@@ -6,3 +6,16 @@
 .card{
 	margin: 20px;
 }
+.title-container{
+	height: 500px;
+	width: 100%;
+	background-image: url("/assets/images/bg.jpg");
+}
+.title-content{
+	width: 100%;
+	padding-top: 200px;
+	text-align: center;
+}
+.textColor1{
+	color: white;
+}

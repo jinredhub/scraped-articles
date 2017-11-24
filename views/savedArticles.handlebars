@@ -2,22 +2,25 @@
 
 <div class="title-container">
   <div class="title-content">
-    <h1 class="textColor1">Scraped Articles</h1>
-    <p class="textColor1">all about Technology</p>
+    <h1 class="textColor1">Saved Articles</h1>
+    <p class="textColor1">You saved articles</p>
   </div>
 </div>
 
 <ul>
   {{#each articles}}
+  {{#if this.note}}
   <div class="card">
     <div class="card-header">
       <a href="{{this.url}}"></a>
       {{this.headline}}
-      <button data-articleId="{{this.id}}" class="saveArticle btn btn-primary">Save Article</button>
+      <button data-articleId="{{this.id}}" class="updateNote btn btn-primary">article note</button>
+      <button data-noteId="{{this.note.id}}" class="deleteArticle btn btn-primary">delete saved</button>
     </div>
     <div class="card-body">
       <p>{{this.summary}}</p>
     </div>
+    {{/if}}
   </div>
   {{/each}}
 </ul>

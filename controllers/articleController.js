@@ -10,8 +10,8 @@ var cheerio = require("cheerio");
 
 var db = require("../models");
 
-
-// Use Handlebars to render the main index.html
+console.log("articleController file loaded");
+// Using Handlebars to render the main index.html
 router.get("/", function(req, res) {
   db.Article
   .find({})
@@ -22,14 +22,8 @@ router.get("/", function(req, res) {
   .catch(function(err){
     res.json(err);
   });
-
-  // connection.query("SELECT * FROM plans;", function(err, data) {
-  //   if (err) {
-  //     return res.status(500).end();
-  //   }
-  //   res.render("index", { plans: data });
-  // });
 });
+
 
 // route to scrape new articles
 router.get("/scrape", function(req, res){
@@ -71,7 +65,48 @@ router.get("/scrape", function(req, res){
     // Log the results once you've looped through each of the elements found with cheerio
     console.log(results);
   });
-
 });
+
+  // route to save articles
+  router.post("/articles/:id", function(req, res){
+    console.log("article POST route is working!!");
+    db.Note
+    .create(req.body)
+    .then(function(dbNote){
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+    })
+    .then(function(db){
+      console.log("added article ID", req.params.id);
+      res.json(db);
+    }).catch(function(err){
+      res.json(err);
+    });
+  });
+
+  // using handlebars to render savedarticle page
+router.get("/savedArticles", function(req, res) {
+  db.Article
+  .find({})
+  .populate("note")
+  .then(function(db){
+    console.log("populated data", db);
+    res.render("savedArticles", {articles: db});
+  })
+  .catch(function(err){
+    res.json(err);
+  });
+});
+
+router.delete("/article/:id", function(req, res){
+  db.Note.remove({
+    _id: req.params.id
+  }).then(function(db){
+    console.log("note was deleted");
+    res.json(db);
+  }).catch(function(err){
+    res.json(err);
+  });
+});
+
 
 module.exports = router;
