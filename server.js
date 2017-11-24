@@ -1,51 +1,56 @@
-// Parses our HTML and helps us find elements
-var cheerio = require("cheerio");
-// Makes HTTP request for HTML page
+var express = require("express");
+var bodyParser = require("body-parser");
+// var logger = require("morgan");
+var mongoose = require("mongoose");
 var request = require("request");
+var exphbs = require("express-handlebars");
 
 
 
-request("https://www.nytimes.com/section/technology", function(error, response, html) {
+// Our scraping tools
+// Axios is a promised-based http library, similar to jQuery's Ajax method
+// It works on the client and on the server
+// var axios = require("axios");
+var cheerio = require("cheerio");
 
-  // Load the HTML into cheerio and save it to a variable
-  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-  var $ = cheerio.load(html);
+// Require all models
+var db = require("./models");
 
-  // An empty array to save the data that we'll scrape
-  let results = [];
+var PORT = 3000;
 
-  // With cheerio, find each p-tag with the "title" class
-  // (i: iterator. element: the current element)
-  $("div.story-body").each(function(i, element) {
+// Initialize Express
+var app = express();
 
-    // Save the text of the element in a "title" variable
-    let headline = $(element).find("h2").text();
+// Configure middleware
 
-    let summary = $(element).find("p").text();
+// Use morgan logger for logging requests
+// app.use(logger("dev"));
+// Use body-parser for handling form submissions
+app.use(bodyParser.urlencoded({ extended: false }));
+// Use express.static to serve the public folder as a static directory
+app.use(express.static("public"));
 
-    let url = $(element).find("a").attr("href");
+// handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-    // In the currently selected element, look at its child elements (i.e., its a-tags),
-    // then save the values for any "href" attributes that the child elements may have
-    // var link = $(element).children().attr("href");
-    // let url = $(element).children().attr("href");
+// Set mongoose to leverage built in JavaScript ES6 Promises
+// Connect to the Mongo DB
+mongoose.Promise = Promise;
+mongoose.connect("mongodb://localhost/nyTech", {
+  useMongoClient: true
+});
 
-    // // Save these results in an object that we'll push into the results array we defined earlier
-    results.push({
-      headline:headline,
-      summary: summary,
-      url: url
-    });
-    // console.log(results);
-  });
+// import routs
+var routes = require("./controllers/articleController.js");
+app.use("/", routes);
 
-  // $("p.summary").each(function(i, element){
-  //   let summary = $(element).text();
-  //   results.push({
-  //     summary: summary
-  //   });
-  // });
+// handlebars
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
-  // Log the results once you've looped through each of the elements found with cheerio
-  console.log(results);
+
+// Start the server
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT);
 });

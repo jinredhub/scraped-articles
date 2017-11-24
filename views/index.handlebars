@@ -1,0 +1,36 @@
+<h1>Scraped Articles</h1>
+<p>all about Technology</p>
+
+<ul>
+  {{#each articles}}
+  <div class="card">
+    <div class="card-header">
+      <a href="{{this.url}}">
+      {{this.headline}}
+      <button data-articleId="{{this.id}}" class="saveArticle btn btn-primary">Save Article</button>
+      </a>
+    </div>
+    <div class="card-body">
+      <p>{{this.summary}}</p>
+    </div>
+  </div>
+  {{/each}}
+</ul>
+
+<!-- <h2>Create a Plan</h2>
+<form id="createplan" class="button-size">
+  <textarea type="text" name="plan"></textarea>
+  <button type="submit">Save Plan!</button>
+</form>
+
+<h2>Update a Plan</h2>
+<form id="updateplan" class="button-size">
+  <select name="id">
+		{{#each plans}}
+			<option value="{{this.id}}">{{this.plan}}</option>
+		{{/each}}
+	</select>
+  <textarea type="text" name="plan" placeholder="plan"></textarea>
+  <button type="submit">Update Plan!</button>
+</form>
+ -->
