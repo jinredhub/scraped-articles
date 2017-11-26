@@ -11,6 +11,7 @@ var cheerio = require("cheerio");
 var db = require("../models");
 
 console.log("articleController file loaded");
+
 // Using Handlebars to render the main index.html
 router.get("/", function(req, res) {
   db.Article
@@ -70,6 +71,7 @@ router.get("/scrape", function(req, res){
   // route to save articles
   router.post("/articles/:id", function(req, res){
     console.log("article POST route is working!!");
+    console.log("req.body: ", req.body);
     db.Note
     .create(req.body)
     .then(function(dbNote){
@@ -97,6 +99,7 @@ router.get("/savedArticles", function(req, res) {
   });
 });
 
+// remove article
 router.delete("/article/:id", function(req, res){
   db.Note.remove({
     _id: req.params.id
@@ -107,6 +110,20 @@ router.delete("/article/:id", function(req, res){
     res.json(err);
   });
 });
+
+// update note
+// router.post("/note/:id", function(req, res){
+//   console.log("request to update note: ", req.params.id);
+//   console.log("req.body: ", req.body);
+//   db.Note.update(
+//       {_id: req.params.id},
+//       {$set: {body:req.body.note}}
+//     ).then(function(db){
+//       res.json(db);
+//     }).catch(function(err){
+//       res.json(err);
+//     });
+// });
 
 
 module.exports = router;
