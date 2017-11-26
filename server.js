@@ -19,8 +19,7 @@ var db = require("./models");
 var PORT = process.env.PORT || 3000 ;
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/nyTech";
- // mongoose.connect = MONGODB_URI;
- // MONGODB_URI = mongoose.connect;
+
 
 // Initialize Express
 var app = express();

@@ -114,19 +114,5 @@ router.delete("/article/:id", function(req, res){
   });
 });
 
-// update note
-// router.post("/note/:id", function(req, res){
-//   console.log("request to update note: ", req.params.id);
-//   console.log("req.body: ", req.body);
-//   db.Note.update(
-//       {_id: req.params.id},
-//       {$set: {body:req.body.note}}
-//     ).then(function(db){
-//       res.json(db);
-//     }).catch(function(err){
-//       res.json(err);
-//     });
-// });
-
 
 module.exports = router;
