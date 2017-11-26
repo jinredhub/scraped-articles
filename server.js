@@ -41,9 +41,9 @@ app.set("view engine", "handlebars");
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-// mongoose.connect("mongodb://localhost/nyTech", {
-//   useMongoClient: true
-// });
+mongoose.connect(MONGODB_URI, {
+  useMongoClient: true
+});
 
 
 
