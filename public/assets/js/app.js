@@ -35,7 +35,17 @@ $(function(){
       data: body
     }).then(function(data){
       console.log("article saved");
-      // location.reload();
+
+      location.reload();
+    });
+  });
+
+  $("#startScrape").on("click", function(event){
+    event.preventDefault();
+    $.ajax("/scrape", {
+      type:"GET"
+    }).then(function(data){
+      console.log("scraped!!");
     });
   });
 

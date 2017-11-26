@@ -7,9 +7,11 @@
 	margin: 20px;
 }
 .title-container{
-	height: 500px;
+	height: 70vh;
 	width: 100%;
 	background-image: url("/assets/images/bg.jpg");
+	background-size: cover;
+	background-size: center;
 }
 .title-content{
 	width: 100%;
@@ -18,4 +20,10 @@
 }
 .textColor1{
 	color: white;
+}
+#startScrape{
+	background-color: red;
+	color: white;
+	padding: 6px 25px;
+	text-align: center;
 }

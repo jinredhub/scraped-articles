@@ -64,7 +64,18 @@ router.get("/scrape", function(req, res){
 
 
     // Log the results once you've looped through each of the elements found with cheerio
-    console.log(results);
+    console.log(results[0]);
+    for(let i=0; i<results.length;i++){
+    db.Article
+    .create(
+        results[i]
+      )
+    .then(function(db){
+        res.json(db);
+      }).catch(function(err){
+        res.json(err);
+      });
+    }
   });
 });
 
