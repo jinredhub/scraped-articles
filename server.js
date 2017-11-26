@@ -42,7 +42,8 @@ mongoose.connect("mongodb://localhost/nyTech", {
 });
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
- mongoose.connect = MONGODB_URI;
+ // mongoose.connect = MONGODB_URI;
+ MONGODB_URI = mongoose.connect;
 
 // import routs
 var routes = require("./controllers/articleController.js");
