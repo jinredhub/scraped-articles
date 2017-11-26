@@ -18,9 +18,6 @@ var db = require("./models");
 
 var PORT =  3000 || process.env.PORT;
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
- mongoose.connect = MONGODB_URI;
-
 // Initialize Express
 var app = express();
 
@@ -43,6 +40,9 @@ mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost/nyTech", {
   useMongoClient: true
 });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+ mongoose.connect = MONGODB_URI;
 
 // import routs
 var routes = require("./controllers/articleController.js");
